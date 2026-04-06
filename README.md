@@ -1,14 +1,14 @@
-# Finance Dashboard Backend
+# 💰 Finance Dashboard Backend
 
-## Overview
+## 📌 Overview
 
-This project is a backend system for a finance dashboard that allows users to manage financial records, view analytics, and access data based on their roles.
+This project is a backend system for a finance dashboard that enables users to manage financial records and view analytics based on role-based access control.
 
-The system demonstrates clean backend architecture, role-based access control, and structured API design.
+It demonstrates clean backend architecture, structured API design, and secure access handling.
 
 ---
 
-## Tech Stack
+## 🛠 Tech Stack
 
 * Java 17
 * Spring Boot
@@ -19,39 +19,54 @@ The system demonstrates clean backend architecture, role-based access control, a
 
 ---
 
-## Features
+## 🧩 Features
 
-### 1. User & Role Management
+### 👤 User Management
 
-* Create and manage users
-* Assign roles: ADMIN, ANALYST, VIEWER
-* Activate/deactivate users
+* Create users
+* Assign roles (ADMIN, ANALYST, VIEWER)
+* Activate/Deactivate users
 
-### 2. Financial Records
+---
 
-* Create, update, delete records
-* Fields include amount, type, category, date, description
-* Supports filtering (extensible)
+### 💳 Financial Records
 
-### 3. Dashboard APIs
+* Create, update, delete financial entries
+* Fields:
 
-* Total income
-* Total expense
-* Net balance
+    * Amount
+    * Type (INCOME / EXPENSE)
+    * Category
+    * Date
+    * Description
 
-### 4. Role-Based Access Control (RBAC)
+---
 
-* ADMIN: Full access
-* ANALYST: Read + dashboard
-* VIEWER: Read-only
+### 📊 Dashboard APIs
+
+* Total Income
+* Total Expense
+* Net Balance
+
+---
+
+### 🔐 Role-Based Access Control (RBAC)
+
+| Role    | Access           |
+| ------- | ---------------- |
+| ADMIN   | Full access      |
+| ANALYST | Read + dashboard |
+| VIEWER  | Read-only        |
 
 Implemented using:
 
 * Spring Security
-* Method-level security (`@PreAuthorize`)
-* Custom filter for role simulation
+* `@PreAuthorize`
+* Custom filter (header-based role simulation)
 
-### 5. Validation & Error Handling
+---
+
+### ✅ Validation & Error Handling
 
 * Input validation using annotations
 * Global exception handler
@@ -59,32 +74,34 @@ Implemented using:
 
 ---
 
-## API Endpoints
+## 🔌 API Endpoints
 
-### User APIs
+### Users
 
-* POST /users → Create user
-* GET /users → Get all users
-* PATCH /users/{id}/status → Update status
-
-### Financial Records
-
-* POST /records
-* GET /records
-* PUT /records/{id}
-* DELETE /records/{id}
-
-### Dashboard
-
-* GET /dashboard/summary
+* POST `/users`
+* GET `/users`
+* PATCH `/users/{id}/status`
 
 ---
 
-## Sample Request
+### Financial Records
+
+* POST `/records`
+* GET `/records`
+* PUT `/records/{id}`
+* DELETE `/records/{id}`
+
+---
+
+### Dashboard
+
+* GET `/dashboard/summary`
+
+---
+
+## 📥 Sample Request
 
 ### Create User
-
-POST /users
 
 ```json
 {
@@ -97,35 +114,35 @@ POST /users
 
 ---
 
-## Running the Project
+## ▶️ Running the Project
 
-1. Clone the repository
+1. Clone repo
 2. Configure PostgreSQL in `application.yml`
-3. Run the application
+3. Run application
 
 ---
 
-## Assumptions
+## 🧠 Design Decisions
 
-* Authentication is simplified using header-based role simulation
-* Focus is on backend design and logic
+* Used layered architecture (Controller → Service → Repository)
+* DTOs for request/response separation
+* RBAC implemented at service layer
+* Database constraints for data integrity
 
 ---
 
-## Future Improvements
+## 🚀 Future Improvements
 
-* JWT-based authentication
+* JWT authentication
 * Pagination & filtering
-* Category-wise analytics
 * Swagger API documentation
+* Category-wise analytics
 
 ---
 
-## Key Highlights
+## ⭐ Key Highlights
 
-* Clean layered architecture (Controller → Service → Repository)
-* DTO-based API design
-* Proper separation of concerns
+* Clean, maintainable code structure
+* Strong separation of concerns
 * Extensible security design
-
----
+* Production-like backend approach
