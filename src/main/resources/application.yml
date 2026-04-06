@@ -2,9 +2,9 @@ spring:
   application:
     name: finance-app
   datasource:
-    url: jdbc:mysql://localhost:3306/finance_db
-    username: root
-    password: yourpassword
+    url: jdbc:postgresql://localhost:5432/finance_db
+    username: postgres
+    password: Applepie@123
   jpa:
     hibernate:
       ddl-auto: update
@@ -12,4 +12,4 @@ spring:
 
 server:
   port: 8080
-  
+
