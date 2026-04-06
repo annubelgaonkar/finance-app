@@ -21,7 +21,7 @@ public class DashboardService {
         return recordRepository.getTotalByType(RecordType.EXPENSE);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'ANALYST')")
+   // @PreAuthorize("hasAnyRole('ADMIN', 'ANALYST')")
     public Double getNetBalance(){
         Double income = getTotalIncome();
         Double expense = getTotalExpense();

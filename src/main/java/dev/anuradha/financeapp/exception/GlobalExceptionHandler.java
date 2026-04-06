@@ -1,13 +1,12 @@
 package dev.anuradha.financeapp.exception;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -37,5 +36,12 @@ public class GlobalExceptionHandler {
                         err -> err.getDefaultMessage()
                 ));
         return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<?> handleDuplicate(DataIntegrityViolationException ex) {
+        return ResponseEntity.badRequest().body(
+                Map.of("error", "Email already exists")
+        );
     }
 }

@@ -16,21 +16,20 @@ public class RoleFilter implements Filter {
     public void doFilter(ServletRequest request,
                          ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
+
         HttpServletRequest req = (HttpServletRequest) request;
-
         String role = req.getHeader("X-ROLE");
+        String assignedRole = (role != null && !role.isBlank()) ? role : "VIEWER";
 
-        String assignedRole = (role != null) ? role: "VIEWER";
-      //  System.out.println("ROLE = " + assignedRole);
+        UsernamePasswordAuthenticationToken auth =
+                new UsernamePasswordAuthenticationToken(
+                        "user",
+                        null,
+                        List.of(new SimpleGrantedAuthority("ROLE_" + assignedRole))
+                );
 
-
-        var auth = new UsernamePasswordAuthenticationToken(
-                "user",
-                null,
-                List.of(new SimpleGrantedAuthority("ROLE_" + assignedRole))
-        );
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        chain.doFilter(request,response);
+        chain.doFilter(request, response);
     }
 }

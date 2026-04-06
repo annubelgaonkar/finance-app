@@ -6,6 +6,7 @@ import dev.anuradha.financeapp.entity.User;
 import dev.anuradha.financeapp.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/status")
     public User updateUserStatus(@PathVariable Long id,
                                  @RequestParam boolean active){
         return userService.updateUserStatus(id, active);

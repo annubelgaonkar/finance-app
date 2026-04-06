@@ -14,12 +14,12 @@ public class FinancialRecordService {
 
     private final FinancialRecordRepository recordRepository;
 
-    @PreAuthorize("hasRole('ADMIN')")
+   // @PreAuthorize("hasRole('ADMIN')")
     public FinancialRecord createRecord(FinancialRecord record){
         return recordRepository.save(record);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'ANALYST', 'VIEWER')")
+    //@PreAuthorize("hasAnyRole('ADMIN', 'ANALYST', 'VIEWER')")
     public List<FinancialRecord> getAllRecords(){
         return recordRepository.findAll();
     }
@@ -38,7 +38,7 @@ public class FinancialRecordService {
         return recordRepository.save(existing);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public void deleteRecord(Long id){
         recordRepository.deleteById(id);
     }

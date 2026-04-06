@@ -17,9 +17,12 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     public UserResponseDto createUser(UserRequestDto dto){
 
+        if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
+            throw new RuntimeException("Email already exists");
+        }
         User user = User.builder()
                         .name(dto.getName())
                         .email(dto.getEmail())
@@ -39,7 +42,6 @@ public class UserService {
                 .build();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     public List<UserResponseDto> getAllUsers(){
         return userRepository.findAll()
                 .stream()
