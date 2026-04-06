@@ -83,7 +83,7 @@ The application follows a layered architecture:
 
 ### Implementation Details
 
-* Spring Security with method-level annotations (`@PreAuthorize`)
+* Spring Security enforced at the filter chain level (SecurityFilterChain)
 * Custom filter to simulate roles via request headers
 * Designed to be easily extendable to JWT-based authentication
 
@@ -153,22 +153,60 @@ X-ROLE: VIEWER
 
 ## ▶️ Running the Project
 
-1. Clone the repository
-2. Configure PostgreSQL in `application.yml`
-3. Create database:
+### Prerequisites
+- Java 17
+- Maven
+- PostgreSQL
 
-   ```sql
-   CREATE DATABASE finance_db;
-   ```
-4. Run the application
+### Steps
 
----
+**1. Clone the repository**
+```bash
+git clone https://github.com/annubelgaonkar/finance-app.git
+cd finance-app
+```
+
+**2. Create the database**
+```sql
+CREATE DATABASE finance_db;
+```
+
+**3. Configure `application.yml`**
+```yaml
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/finance_db
+    username: <your_username>
+    password: <your_password>
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+```
+
+**4. Run the application**
+```bash
+mvn spring-boot:run
+```
+
+**5. App runs at:** `http://localhost:8080`
+
+### Testing the API
+
+Pass roles via request header:
+```bash
+curl -X POST http://localhost:8080/users \
+  -H "Content-Type: application/json" \
+  -H "X-ROLE: ADMIN" \
+  -d '{"name": "Anu", "email": "anu@test.com", "password": "1234", "role": "ADMIN"}'
+```
+
 
 ## 🧠 Design Decisions
 
 * Used layered architecture for separation of concerns
 * DTOs used to decouple API from database entities
-* RBAC implemented at service layer using Spring Security
+* RBAC implemented at the security filter chain level, ensuring authorization before request validation
 * Database constraints used to ensure data integrity
 
 ---
