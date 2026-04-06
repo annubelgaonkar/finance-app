@@ -2,9 +2,9 @@
 
 ## 📌 Overview
 
-This project is a backend system for a finance dashboard that enables users to manage financial records and view analytics based on role-based access control.
+This project is a backend system for a finance dashboard that allows users to manage financial records and view analytics based on role-based access control (RBAC).
 
-It demonstrates clean backend architecture, structured API design, and secure access handling.
+It demonstrates backend engineering fundamentals including API design, data modeling, access control, validation, and clean architecture.
 
 ---
 
@@ -19,19 +19,42 @@ It demonstrates clean backend architecture, structured API design, and secure ac
 
 ---
 
+## 🏗️ Architecture
+
+The application follows a layered architecture:
+
+**Controller → Service → Repository → Database**
+
+* **Controller**: Handles HTTP requests and responses
+* **Service**: Contains business logic and access control
+* **Repository**: Manages database operations using JPA
+* **Database**: Stores persistent data (PostgreSQL)
+
+---
+
+## 🔄 Request Flow
+
+1. Client sends HTTP request
+2. Controller receives and validates request
+3. Service processes business logic and enforces RBAC
+4. Repository interacts with database
+5. Response is returned to client
+
+---
+
 ## 🧩 Features
 
 ### 👤 User Management
 
 * Create users
 * Assign roles (ADMIN, ANALYST, VIEWER)
-* Activate/Deactivate users
+* Activate / deactivate users
 
 ---
 
 ### 💳 Financial Records
 
-* Create, update, delete financial entries
+* Create, update, delete financial records
 * Fields:
 
     * Amount
@@ -50,41 +73,45 @@ It demonstrates clean backend architecture, structured API design, and secure ac
 
 ---
 
-### 🔐 Role-Based Access Control (RBAC)
+## 🔐 Role-Based Access Control (RBAC)
 
-| Role    | Access           |
-| ------- | ---------------- |
-| ADMIN   | Full access      |
-| ANALYST | Read + dashboard |
-| VIEWER  | Read-only        |
+| Role    | Permissions                          |
+| ------- | ------------------------------------ |
+| ADMIN   | Full access (CRUD + user management) |
+| ANALYST | Read + dashboard access              |
+| VIEWER  | Read-only                            |
 
-Implemented using:
+### Implementation Details
 
-* Spring Security
-* `@PreAuthorize`
-* Custom filter (header-based role simulation)
+* Spring Security with method-level annotations (`@PreAuthorize`)
+* Custom filter to simulate roles via request headers
+* Designed to be easily extendable to JWT-based authentication
 
 ---
 
-### ✅ Validation & Error Handling
+## 🔑 Testing RBAC
 
-* Input validation using annotations
-* Global exception handler
-* Structured error responses
+Since authentication is simplified, roles can be passed using request headers:
+
+```plaintext
+X-ROLE: ADMIN
+X-ROLE: ANALYST
+X-ROLE: VIEWER
+```
 
 ---
 
 ## 🔌 API Endpoints
 
-### Users
+### 👤 Users
 
-* POST `/users`
-* GET `/users`
-* PATCH `/users/{id}/status`
+* POST `/users` → Create user
+* GET `/users` → Get all users
+* PATCH `/users/{id}/status` → Update user status
 
 ---
 
-### Financial Records
+### 💰 Financial Records
 
 * POST `/records`
 * GET `/records`
@@ -93,7 +120,7 @@ Implemented using:
 
 ---
 
-### Dashboard
+### 📊 Dashboard
 
 * GET `/dashboard/summary`
 
@@ -114,35 +141,52 @@ Implemented using:
 
 ---
 
+## ⚠️ Sample Error Response
+
+```json
+{
+  "error": "Email already exists"
+}
+```
+
+---
+
 ## ▶️ Running the Project
 
-1. Clone repo
+1. Clone the repository
 2. Configure PostgreSQL in `application.yml`
-3. Run application
+3. Create database:
+
+   ```sql
+   CREATE DATABASE finance_db;
+   ```
+4. Run the application
 
 ---
 
 ## 🧠 Design Decisions
 
-* Used layered architecture (Controller → Service → Repository)
-* DTOs for request/response separation
-* RBAC implemented at service layer
-* Database constraints for data integrity
+* Used layered architecture for separation of concerns
+* DTOs used to decouple API from database entities
+* RBAC implemented at service layer using Spring Security
+* Database constraints used to ensure data integrity
 
 ---
 
 ## 🚀 Future Improvements
 
-* JWT authentication
-* Pagination & filtering
-* Swagger API documentation
+* JWT-based authentication
+* Pagination and filtering
+* Swagger/OpenAPI documentation
 * Category-wise analytics
 
 ---
 
 ## ⭐ Key Highlights
 
-* Clean, maintainable code structure
-* Strong separation of concerns
-* Extensible security design
-* Production-like backend approach
+* Clean and maintainable code structure
+* Proper separation of concerns
+* Production-style backend design
+* Extensible security implementation
+
+---
